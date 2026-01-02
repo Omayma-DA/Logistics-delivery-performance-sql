@@ -40,3 +40,12 @@ SELECT status,
       COUNT(*) AS total_orders
 FROM deliveries
 GROUP BY status;
+
+--5) Percentage of late deliveries
+SELECT 
+    ROUND(
+        SUM(CASE WHEN status= 'Late' THEN 1 ELSE 0 END)::numeric
+          / COUNT(*) * 100,
+           2
+    ) AS late_percentage
+FROM deliveries;
