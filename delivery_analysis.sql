@@ -62,3 +62,15 @@ ORDER BY avg_shipping_cost DESC;
 SELECT
   ROUND(AVG(delivery_date - ship_date),2) AS avg_delivery_days
 FROM deliveries;
+
+--8)Late delivery rate by warehouse
+SELECT
+  warehouse,
+  ROUND(
+    SUM(CASE WHEN status = 'Late' THEN 1 ELSE 0 END)::numeric
+      / COUNT(*) *100,
+      2
+  ) AS late_rate_percentage
+FROM deliveries
+GROUP By warehouse
+ORDER By late_rate_percentage DESC;
